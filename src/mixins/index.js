@@ -1,0 +1,1 @@
+export { windowWidthMixin } from './windowWidthMixin';

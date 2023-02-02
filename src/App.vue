@@ -1,47 +1,58 @@
-<script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
-import TheWelcome from './components/TheWelcome.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
-  <main>
-    <TheWelcome />
-  </main>
+    <AppHeader />
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-}
+<script>
+import { AppHeader } from './components';
+import { Breakpoints, navbarItems } from './constants';
+import { windowWidthMixin } from './mixins';
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+//import swipe from "@/events/swipe";
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
+export default {
+    components: { AppHeader },
+    mixins: [windowWidthMixin],
 
-  .logo {
-    margin: 0 2rem 0 0;
-  }
+    data() {
+        return { show_appbar: false, navbarItems };
+    },
 
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-}
-</style>
+    beforeMount() {
+        // вызов функции swipe с предварительными настройками
+        //swipe(document, { maxTime: 800, minTime: 200, maxDist: 150, minDist: 50 });
+    },
+
+    methods: {
+        isMobile() {
+            return this.windowWidth < Breakpoints.SM;
+        },
+
+        resizeHandler(event) {
+            console.log(event.target);
+            this.windowWidth = event.target.innerWidth;
+        },
+
+        async captureNavigation(from, to) {
+            if (from === to) return;
+            try {
+                fetch(`${process.env.VUE_APP_API_MARKETING}/action`, {
+                    method: 'POST',
+                    cache: 'no-cache',
+                    redirect: 'follow',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: localStorage.getItem('marketing-id'),
+                        action: 'route to',
+                        path_from: from,
+                        path_to: to,
+                    }),
+                });
+            } catch {
+                //Failed, skips
+            }
+        },
+    },
+};
+</script>
+
+<style></style>
