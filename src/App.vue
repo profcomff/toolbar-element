@@ -1,16 +1,16 @@
 <template>
-    <AppHeader />
+    <NavbarTop />
 </template>
 
 <script>
-import { AppHeader } from './components';
+import NavbarTop from './components/NavbarTop.vue';
 import { Breakpoints, navbarItems } from './constants';
 import { windowWidthMixin } from './mixins';
 
 //import swipe from "@/events/swipe";
 
 export default {
-    components: { AppHeader },
+    components: { NavbarTop },
     mixins: [windowWidthMixin],
 
     data() {
