@@ -89,9 +89,9 @@ jobs:
         runs-on: [self-hosted, Linux]
         environment:
             name: Testing
-            url: https://services.ui.test.profcomff.com/
+            url: https://toolbar.ui.test.profcomff.com/
         env:
-            CONTAITER_NAME: com_profcomff_ui_services_test
+            CONTAITER_NAME: com_profcomff_ui_toolbar_test
         permissions:
             packages: read
 
@@ -114,9 +114,9 @@ jobs:
         runs-on: [self-hosted, Linux]
         environment:
             name: Production
-            url: https://services.ui.profcomff.com/
+            url: https://toolbar.ui.profcomff.com/
         env:
-            CONTAITER_NAME: com_profcomff_ui_services
+            CONTAITER_NAME: com_profcomff_ui_toolbar
         permissions:
             packages: read
 
