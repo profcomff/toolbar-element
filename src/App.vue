@@ -1,58 +1,55 @@
 <template>
-    <NavbarTop />
+    <div class="toolbarContainer">
+        <KeepAlive>
+            <Component
+                :is="activeVariant"
+                :options="options"
+                @navigate="navigate"
+            />
+        </KeepAlive>
+    </div>
 </template>
 
 <script>
-import NavbarTop from './components/NavbarTop.vue';
-import { Breakpoints, navbarItems } from './constants';
-import { windowWidthMixin } from './mixins';
-
-//import swipe from "@/events/swipe";
+import { ToolbarBack, ToolbarCalendar, ToolbarPlain } from './components';
 
 export default {
-    components: { NavbarTop },
-    mixins: [windowWidthMixin],
-
-    data() {
-        return { show_appbar: false, navbarItems };
+    components: {
+        ToolbarBack,
+        ToolbarCalendar,
+        ToolbarPlain,
     },
-
+    data: () => ({
+        layoutName: 'plain',
+        text: 'Твой физфак!',
+    }),
     beforeMount() {
-        // вызов функции swipe с предварительными настройками
-        //swipe(document, { maxTime: 800, minTime: 200, maxDist: 150, minDist: 50 });
+        document.addEventListener('change-header-layout', e => {
+            this.layoutName = e.detail.layoutName;
+            this.options = e.detail;
+        });
     },
-
-    methods: {
-        isMobile() {
-            return this.windowWidth < Breakpoints.SM;
-        },
-
-        resizeHandler(event) {
-            console.log(event.target);
-            this.windowWidth = event.target.innerWidth;
-        },
-
-        async captureNavigation(from, to) {
-            if (from === to) return;
-            try {
-                fetch(`${process.env.VUE_APP_API_MARKETING}/action`, {
-                    method: 'POST',
-                    cache: 'no-cache',
-                    redirect: 'follow',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: localStorage.getItem('marketing-id'),
-                        action: 'route to',
-                        path_from: from,
-                        path_to: to,
-                    }),
-                });
-            } catch {
-                //Failed, skips
+    computed: {
+        activeVariant() {
+            switch (this.layoutName) {
+                case 'calendar':
+                    return ToolbarCalendar;
+                case 'back':
+                    return ToolbarBack;
             }
+            return ToolbarPlain;
         },
     },
 };
 </script>
-
-<style></style>
+<style scoped>
+.toolbarContainer {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+    padding: 10px 4%;
+    height: 56px;
+}
+</style>

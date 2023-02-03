@@ -1,7 +1,13 @@
 button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all .3s;
     background: none;
     border: none;
     outline: none;
+    padding: 0;
 }
 
 h1, h2, h3, h4, h5, h6 {

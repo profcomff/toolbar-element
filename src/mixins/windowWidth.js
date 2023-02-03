@@ -11,4 +11,9 @@ export const windowWidthMixin = {
     unmounted() {
         window.removeEventListener('resize', this.resizeHandler);
     },
+    methods: {
+        resizeHandler(event) {
+            this.windowWidth = event.target.innerWidth;
+        },
+    },
 };
