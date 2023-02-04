@@ -1,57 +1,70 @@
 <template>
-    <header>
+    <div
+        v-click-outside="closeAll"
+        class="date"
+    >
+        <button
+            v-if="!options.disabled"
+            class="date options"
+            :class="showCalendar ? 'opened' : ''"
+            @click="showCalendar = !showCalendar"
+        >
+            <div class="toggler-text">
+                <span class="dateInfo">{{ formatDate(date) }}</span>
+                <span
+                    v-if="options.groupInfo && options.groupInfo.number"
+                    class="groupInfo"
+                >
+                    {{ options.groupInfo.number }} группа
+                </span>
+            </div>
+            <span class="material-symbols-sharp expander"> expand_more </span>
+        </button>
         <div
-            v-click-outside="closeAll"
+            v-if="options.disabled"
             class="date"
         >
-            <button
-                v-if="!options.disabled"
-                class="date options"
-                :class="showCalendar ? 'opened' : ''"
-                @click="showCalendar = !showCalendar"
-            >
-                <div class="toggler-text">
-                    <span class="dateInfo">{{ formatDate(date) }}</span>
-                    <span
-                        v-if="options.groupInfo && options.groupInfo.number"
-                        class="groupInfo"
-                    >
-                        {{ options.groupInfo.number }} группа
-                    </span>
-                </div>
-                <span class="material-symbols-sharp expander">
-                    expand_more
-                </span>
-            </button>
-            <div
-                v-if="options.disabled"
-                class="date"
-            >
-                {{ options.text }}
-            </div>
-            <div
-                v-if="showCalendar"
-                class="date-nav"
-            >
-                <KeepAlive>
-                    <DatePicker
-                        v-model="date"
-                        class="calendar"
-                        is-required
-                    />
-                </KeepAlive>
-            </div>
+            {{ options.text }}
         </div>
-        <OptionsButton
-            icon="today"
-            :disabled="options.disabled"
-            @click="date = new Date()"
-        />
-        <DropdownMenu
-            :menu="options.menu"
-            :disabled="options.disabled"
-        />
-    </header>
+        <div
+            style="display: flex; gap: 12px; flex: 1"
+            v-if="windowWidth >= 576"
+        >
+            <button
+                style="color: white"
+                @click="() => navigate('/timetable')"
+            >
+                Расписание
+            </button>
+            <button
+                style="color: white"
+                @click="() => navigate('/apps')"
+            >
+                Сервисы
+            </button>
+        </div>
+        <div
+            v-if="showCalendar"
+            class="date-nav"
+        >
+            <KeepAlive>
+                <DatePicker
+                    v-model="date"
+                    class="calendar"
+                    is-required
+                />
+            </KeepAlive>
+        </div>
+    </div>
+    <ButtonIcon
+        icon="today"
+        :disabled="options.disabled"
+        @click="date = new Date()"
+    />
+    <DropdownMenu
+        :menu="options.menu"
+        :disabled="options.disabled"
+    />
 </template>
 
 <script>
@@ -59,15 +72,18 @@ import 'v-calendar/dist/style.css';
 import vClickOutside from 'click-outside-vue3';
 import { DatePicker } from 'v-calendar';
 import DropdownMenu from './DropdownMenu';
-import OptionsButton from './OptionsButton';
+import ButtonIcon from './ButtonIcon';
+import * as singleSpa from 'single-spa';
+import { windowWidthMixin } from '../mixins';
 
 export default {
     name: 'NavbarTop',
     components: {
         DatePicker,
         DropdownMenu,
-        OptionsButton,
+        ButtonIcon,
     },
+    mixins: [windowWidthMixin],
     directives: {
         clickOutside: vClickOutside.directive,
     },
@@ -119,23 +135,14 @@ export default {
                 new CustomEvent('change-date', { detail: { date: this.date } }),
             );
         },
+        navigate(path) {
+            singleSpa.navigateToUrl(path);
+        },
     },
 };
 </script>
 
 <style scoped>
-header {
-    height: 56px;
-    background-color: var(--bs-primary);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    width: 100%;
-    gap: 10px;
-    padding: 10px 4%;
-    box-shadow: 0px 2px 2px lightgray;
-}
-
 .calendar {
     border: none;
 }
@@ -158,10 +165,11 @@ header {
     color: var(--bs-on-primary);
     background: none;
     border: none;
-    margin-right: auto;
     display: flex;
+    flex: 1;
     flex-direction: row;
     align-items: center;
+    justify-content: flex-start;
 }
 
 .toggler-text {

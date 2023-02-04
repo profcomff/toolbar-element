@@ -1,1 +1,1 @@
-export { windowWidthMixin } from './windowWidthMixin';
+export { windowWidthMixin } from './windowWidth';

@@ -1,11 +1,11 @@
 <template>
-    <OptionsButton
+    <ButtonIcon
         icon="more_vert"
         :disabled="disabled"
         @click="showOptions = !showOptions"
     />
     <div
-        v-if="showOptions"
+        v-show="showOptions"
         v-click-outside="closeMenu"
         class="dropdown-menu"
     >
@@ -22,13 +22,13 @@
 
 <script>
 import vClickOutside from 'click-outside-vue3';
-import OptionsButton from './OptionsButton';
+import ButtonIcon from './ButtonIcon';
 
 export default {
     directives: {
         clickOutside: vClickOutside.directive,
     },
-    components: { OptionsButton },
+    components: { ButtonIcon },
     props: {
         menu: { type: Array, default: () => [] },
         disabled: Boolean,
@@ -38,7 +38,6 @@ export default {
     }),
     methods: {
         openMenu() {
-            console.log(this.menu);
             this.showOptions = !this.showOptions;
         },
         closeMenu() {
