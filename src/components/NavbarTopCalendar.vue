@@ -92,22 +92,6 @@ export default {
         date(newDate, oldDate) {
             if (!newDate) this.date = oldDate;
             this.syncDate();
-            try {
-                fetch(`${process.env.VUE_APP_API_MARKETING}/action`, {
-                    method: 'POST',
-                    cache: 'no-cache',
-                    redirect: 'follow',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: localStorage.getItem('marketing-id'),
-                        action: 'viewed timetable on new date',
-                        path_from: '/timetable',
-                        path_to: '/timetable',
-                    }),
-                });
-            } catch {
-                //Failed, skips
-            }
         },
     },
     beforeMount() {
