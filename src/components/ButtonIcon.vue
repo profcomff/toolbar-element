@@ -29,10 +29,7 @@ button:disabled {
 button:hover {
     background-color: rgba(255, 255, 255, 0.1);
 }
-button:focus {
-    background-color: rgba(255, 255, 255, 0.2);
-}
 button:active {
-    background-color: rgba(255, 255, 255, 0.3);
+    background-color: rgba(255, 255, 255, 0.2);
 }
 </style>

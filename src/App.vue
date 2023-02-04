@@ -51,5 +51,6 @@ export default {
     gap: 10px;
     padding: 10px 4%;
     height: 56px;
+    background: var(--bs-primary);
 }
 </style>

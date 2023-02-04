@@ -4,7 +4,6 @@ import { createApp, h } from 'vue';
 
 import App from './App.vue';
 
-import './variables.css';
 import './style.css';
 
 const vueLifecycles = singleSpaVue({
