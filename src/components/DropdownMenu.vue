@@ -1,22 +1,23 @@
 <template>
-    <ButtonIcon
-        icon="more_vert"
-        :disabled="disabled"
-        @click="showOptions = !showOptions"
-    />
-    <div
-        v-show="showOptions"
-        v-click-outside="closeMenu"
-        class="dropdown-menu"
-    >
-        <button
-            v-for="(menuItem, index) in menu"
-            :key="index"
-            class="dropdown-item"
-            @click="emitMenuAction(index)"
+    <div v-click-outside="closeMenu">
+        <ButtonIcon
+            icon="more_vert"
+            :disabled="disabled"
+            @click="showOptions = !showOptions"
+        />
+        <div
+            v-show="showOptions"
+            class="dropdown-menu"
         >
-            {{ menuItem.name }}
-        </button>
+            <button
+                v-for="(menuItem, index) in menu"
+                :key="index"
+                class="dropdown-item"
+                @click="emitMenuAction(index)"
+            >
+                {{ menuItem.name }}
+            </button>
+        </div>
     </div>
 </template>
 
@@ -37,9 +38,6 @@ export default {
         showOptions: false,
     }),
     methods: {
-        openMenu() {
-            this.showOptions = !this.showOptions;
-        },
         closeMenu() {
             this.showOptions = false;
         },
