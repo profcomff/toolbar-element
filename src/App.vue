@@ -1,10 +1,11 @@
 <template>
-    <div class="toolbarContainer">
+    <KeepAlive>
         <Component
             :is="activeVariant"
             :options="options"
+            :date="date"
         />
-    </div>
+    </KeepAlive>
 </template>
 
 <script>
@@ -18,11 +19,23 @@ export default {
     },
     data: () => ({
         options: {},
+        date: new Date(),
     }),
     beforeMount() {
-        document.addEventListener('change-header-layout', e => {
-            Object.assign(this.options, e.detail);
-        });
+        document.addEventListener(
+            'change-header-layout',
+            this.changeHeaderHandler,
+        );
+        document.addEventListener('change-date', this.changeDateHandler);
+        document.addEventListener('sync-date', this.syncDateHandler);
+    },
+    beforeUnmount() {
+        document.removeEventListener(
+            'change-header-layout',
+            this.changeHeaderHandler,
+        );
+        document.removeEventListener('change-date', this.changeDateHandler);
+        document.remove('sync-date', this.syncDateHandler);
     },
     computed: {
         activeVariant() {
@@ -35,17 +48,32 @@ export default {
             return ToolbarPlain;
         },
     },
+    methods: {
+        changeHeaderHandler(e) {
+            Object.assign(this.options, e.detail);
+        },
+        changeDateHandler(e) {
+            console.log('change-date', e);
+            this.date = e.detail.date;
+        },
+        syncDateHandler() {
+            document.dispatchEvent(
+                new CustomEvent('sync-date-response', {
+                    detail: {
+                        date: this.date,
+                    },
+                }),
+            );
+        },
+    },
 };
 </script>
 <style scoped>
 .toolbarContainer {
-    display: flex;
-    height: 100%;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
     width: 100%;
-    gap: 10px;
     padding: 10px 4%;
-    height: 56px;
     background: var(--bs-primary);
 }
 </style>

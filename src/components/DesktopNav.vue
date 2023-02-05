@@ -1,13 +1,13 @@
 <template>
-    <div style="display: flex; gap: 12px; flex: 1">
+    <div class="desktop-nav">
         <button
-            style="color: white"
+            class="desktop-nav-item"
             @click="() => navigate('/timetable')"
         >
             Расписание
         </button>
         <button
-            style="color: white"
+            class="desktop-nav-item"
             @click="() => navigate('/apps')"
         >
             Сервисы
@@ -25,3 +25,17 @@ export default {
     },
 };
 </script>
+<style scoped>
+.desktop-nav-item {
+    color: white;
+}
+
+.desktop-nav-item:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+.desktop-nav {
+    display: flex;
+    gap: 12px;
+    flex: 1;
+}
+</style>

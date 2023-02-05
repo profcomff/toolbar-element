@@ -1,54 +1,54 @@
 <template>
-    <div
-        v-click-outside="closeAll"
-        class="date"
-    >
-        <button
-            v-if="!options.disabled"
-            class="date options"
-            :class="showCalendar ? 'opened' : ''"
-            @click="showCalendar = !showCalendar"
-        >
-            <div class="toggler-text">
-                <span class="dateInfo">{{ formatDate(date) }}</span>
-                <span
-                    v-if="options.groupInfo && options.groupInfo.number"
-                    class="groupInfo"
-                >
-                    {{ options.groupInfo.number }} группа
-                </span>
-            </div>
-            <span class="material-symbols-sharp expander"> expand_more </span>
-        </button>
-        <div
-            v-if="options.disabled"
-            class="date"
-        >
-            {{ options.text }}
-        </div>
-        <DesktopNav v-if="windowWidth >= 576" />
+    <div v-click-outside="closeAll">
         <div
             v-if="showCalendar"
             class="date-nav"
         >
-            <KeepAlive>
-                <DatePicker
-                    v-model="date"
-                    class="calendar"
-                    is-required
-                />
-            </KeepAlive>
+            <DatePicker
+                @dayclick="dayclickHandler"
+                v-model="innerDate"
+                class="calendar"
+                is-required
+            />
         </div>
+        <BaseLayout>
+            <template #meta>
+                <button
+                    class="options"
+                    :class="showCalendar ? 'opened' : ''"
+                    @click="showCalendar = !showCalendar"
+                >
+                    <div class="toggler-text">
+                        <span class="dateInfo">{{ formatDate(date) }}</span>
+                        <span
+                            v-if="options.groupInfo && options.groupInfo.number"
+                            class="groupInfo"
+                        >
+                            {{ options.groupInfo.number }} группа
+                        </span>
+                    </div>
+                    <span class="material-symbols-sharp expander">
+                        expand_more
+                    </span>
+                </button>
+            </template>
+
+            <template #menu>
+                <DesktopNav v-if="windowWidth >= 576" />
+            </template>
+            <template #actions>
+                <ButtonIcon
+                    icon="today"
+                    :disabled="options.disabled"
+                    @click="updateDate(new Date())"
+                />
+                <DropdownMenu
+                    :menu="options.menu"
+                    :disabled="options.disabled"
+                />
+            </template>
+        </BaseLayout>
     </div>
-    <ButtonIcon
-        icon="today"
-        :disabled="options.disabled"
-        @click="date = new Date()"
-    />
-    <DropdownMenu
-        :menu="options.menu"
-        :disabled="options.disabled"
-    />
 </template>
 
 <script>
@@ -59,6 +59,7 @@ import DropdownMenu from './DropdownMenu';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
 import DesktopNav from './DesktopNav.vue';
+import BaseLayout from './BaseLayout.vue';
 
 export default {
     name: 'NavbarTop',
@@ -67,6 +68,7 @@ export default {
         DropdownMenu,
         ButtonIcon,
         DesktopNav,
+        BaseLayout,
     },
     mixins: [windowWidthMixin],
     directives: {
@@ -81,28 +83,22 @@ export default {
                 disabled: true,
             }),
         },
+        date: {
+            type: Date,
+            required: true,
+        },
     },
     data: () => ({
-        date: new Date(),
         showCalendar: false,
         showOptions: false,
         dateWatcher: null,
+        innerDate: new Date(),
     }),
 
-    watch: {
-        date(newDate, oldDate) {
-            if (!newDate) this.date = oldDate;
-            this.syncDate();
-        },
-    },
-    beforeMount() {
-        document.addEventListener('sync-date', this.syncDate);
-        document.addEventListener('change-main-date', e => {
-            this.date = e.detail.date;
-        });
-        this.syncDate();
-    },
     methods: {
+        dayclickHandler(e) {
+            this.updateDate(e.date);
+        },
         closeAll() {
             this.showCalendar = false;
         },
@@ -115,10 +111,20 @@ export default {
                 return date.toLocaleString('ru', options);
             }
         },
-        syncDate() {
+        updateDate(date) {
+            console.log(date.getDay());
             document.dispatchEvent(
-                new CustomEvent('change-date', { detail: { date: this.date } }),
+                new CustomEvent('change-date', {
+                    detail: {
+                        date,
+                    },
+                }),
             );
+        },
+    },
+    watch: {
+        date(newVal) {
+            this.innerDate = newVal;
         },
     },
 };
@@ -143,17 +149,6 @@ export default {
     z-index: 100;
 }
 
-.date {
-    color: var(--bs-on-primary);
-    background: none;
-    border: none;
-    display: flex;
-    flex: 1;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-}
-
 .toggler-text {
     display: flex;
     flex-flow: column nowrap;
@@ -170,6 +165,10 @@ export default {
 }
 .opened .expander {
     transform: rotate(180deg);
+}
+
+.options {
+    color: white;
 }
 
 .dateInfo {
