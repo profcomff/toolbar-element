@@ -4,39 +4,19 @@
         v-if="options.menu && options.menu.length > 0"
         :menu="options.menu"
     />
-    <div
-        style="display: flex; gap: 12px; flex: 1"
-        v-if="windowWidth >= 576"
-    >
-        <button
-            style="color: white"
-            @click="() => navigate('/timetable')"
-        >
-            Расписание
-        </button>
-        <button
-            style="color: white"
-            @click="() => navigate('/apps')"
-        >
-            Сервисы
-        </button>
-    </div>
+    <DesktopNav v-if="windowWidth >= 576" />
 </template>
 
 <script>
 import DropdownMenu from './DropdownMenu';
-import * as singleSpa from 'single-spa';
 import { windowWidthMixin } from '../mixins';
+import DesktopNav from './DesktopNav.vue';
+
 export default {
-    components: { DropdownMenu },
+    components: { DropdownMenu, DesktopNav },
     mixins: [windowWidthMixin],
     props: {
         options: { type: Object, default: () => ({ text: 'Твой физфак!' }) },
-    },
-    methods: {
-        navigate(path) {
-            singleSpa.navigateToUrl(path);
-        },
     },
 };
 </script>

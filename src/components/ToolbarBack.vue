@@ -4,23 +4,8 @@
         @click="back"
     />
     <div>{{ options.text }}</div>
-    <div
-        style="display: flex; gap: 12px; flex: 1"
-        v-if="windowWidth >= 576"
-    >
-        <button
-            style="color: white"
-            @click="() => navigate('/timetable')"
-        >
-            Расписание
-        </button>
-        <button
-            style="color: white"
-            @click="() => navigate('/apps')"
-        >
-            Сервисы
-        </button>
-    </div>
+    <DesktopNav v-if="windowWidth >= 576" />
+
     <DropdownMenu
         v-if="options.menu && options.menu.length > 0"
         :menu="options.menu"
@@ -30,10 +15,10 @@
 <script>
 import ButtonIcon from './ButtonIcon';
 import DropdownMenu from './DropdownMenu';
-import * as singleSpa from 'single-spa';
+import DesktopNav from './DesktopNav.vue';
 import { windowWidthMixin } from '../mixins';
 export default {
-    components: { DropdownMenu, ButtonIcon },
+    components: { DropdownMenu, ButtonIcon, DesktopNav },
     mixins: [windowWidthMixin],
     props: {
         options: { type: Object, default: () => ({ text: 'Твой физфак!' }) },
@@ -44,9 +29,6 @@ export default {
         },
         getButtons() {
             return JSON.parse(localStorage.getItem('navbar-buttons'));
-        },
-        navigate(path) {
-            singleSpa.navigateToUrl(path);
         },
     },
 };

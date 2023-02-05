@@ -1,12 +1,9 @@
 <template>
     <div class="toolbarContainer">
-        <KeepAlive>
-            <Component
-                :is="activeVariant"
-                :options="options"
-                @navigate="navigate"
-            />
-        </KeepAlive>
+        <Component
+            :is="activeVariant"
+            :options="options"
+        />
     </div>
 </template>
 
@@ -20,18 +17,16 @@ export default {
         ToolbarPlain,
     },
     data: () => ({
-        layoutName: 'plain',
-        text: 'Твой физфак!',
+        options: {},
     }),
     beforeMount() {
         document.addEventListener('change-header-layout', e => {
-            this.layoutName = e.detail.layoutName;
-            this.options = e.detail;
+            Object.assign(this.options, e.detail);
         });
     },
     computed: {
         activeVariant() {
-            switch (this.layoutName) {
+            switch (this.options.layoutName) {
                 case 'calendar':
                     return ToolbarCalendar;
                 case 'back':
