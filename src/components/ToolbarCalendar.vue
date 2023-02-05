@@ -26,23 +26,7 @@
         >
             {{ options.text }}
         </div>
-        <div
-            style="display: flex; gap: 12px; flex: 1"
-            v-if="windowWidth >= 576"
-        >
-            <button
-                style="color: white"
-                @click="() => navigate('/timetable')"
-            >
-                Расписание
-            </button>
-            <button
-                style="color: white"
-                @click="() => navigate('/apps')"
-            >
-                Сервисы
-            </button>
-        </div>
+        <DesktopNav v-if="windowWidth >= 576" />
         <div
             v-if="showCalendar"
             class="date-nav"
@@ -73,8 +57,8 @@ import vClickOutside from 'click-outside-vue3';
 import { DatePicker } from 'v-calendar';
 import DropdownMenu from './DropdownMenu';
 import ButtonIcon from './ButtonIcon';
-import * as singleSpa from 'single-spa';
 import { windowWidthMixin } from '../mixins';
+import DesktopNav from './DesktopNav.vue';
 
 export default {
     name: 'NavbarTop',
@@ -82,6 +66,7 @@ export default {
         DatePicker,
         DropdownMenu,
         ButtonIcon,
+        DesktopNav,
     },
     mixins: [windowWidthMixin],
     directives: {
@@ -134,9 +119,6 @@ export default {
             document.dispatchEvent(
                 new CustomEvent('change-date', { detail: { date: this.date } }),
             );
-        },
-        navigate(path) {
-            singleSpa.navigateToUrl(path);
         },
     },
 };
