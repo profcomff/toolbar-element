@@ -1,11 +1,9 @@
 <template>
-    <KeepAlive>
-        <Component
-            :is="activeVariant"
-            :options="options"
-            :date="date"
-        />
-    </KeepAlive>
+    <Component
+        :is="activeVariant"
+        :options="options"
+        :date="date"
+    />
 </template>
 
 <script>
