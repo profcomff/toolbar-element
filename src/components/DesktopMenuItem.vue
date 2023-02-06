@@ -28,6 +28,7 @@ export default {
 .desktop-menu-item {
     color: var(--bs-on-primary);
     padding: 0 4px;
+    width: 120px;
 }
 
 .desktop-menu-item:hover {

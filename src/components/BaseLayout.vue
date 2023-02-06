@@ -46,7 +46,6 @@ export default {
     display: flex;
     align-items: center;
     color: white;
-    max-width: 200px;
 }
 
 .actions {
@@ -56,24 +55,39 @@ export default {
 
 .meta {
     gap: 16px;
+    width: 320px;
 }
 
 .title {
     font-size: 16px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.title:empty {
+    display: none;
 }
 
 .vl {
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    height: calc(100% - 20px);
+    width: 2px;
+    height: calc(100% - 4px);
     align-self: center;
-    margin: 0 12px;
+    margin: 0 16px;
+    border-radius: 2px;
+    background: linear-gradient(
+        0,
+        var(--bs-primary),
+        rgba(255, 255, 255, 0.5) 45%,
+        var(--bs-primary)
+    );
 }
 
 .base-layout {
     display: flex;
     background: var(--bs-primary);
     height: 56px;
-    padding: 0 4%;
+    padding: 0 min(4%, 16px);
     margin: 0;
 }
 
@@ -82,7 +96,8 @@ export default {
         display: flex;
         justify-content: space-between;
     }
-    .only-desktop {
+    .only-desktop,
+    .vl {
         display: none;
     }
 }

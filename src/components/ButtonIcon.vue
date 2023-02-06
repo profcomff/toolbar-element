@@ -19,7 +19,7 @@ export default {
 button {
     color: var(--bs-on-primary);
     border-radius: 999px;
-    padding: 8px;
+    padding: 4px;
 }
 
 button:disabled {
@@ -28,6 +28,7 @@ button:disabled {
 
 button:hover {
     background-color: rgba(255, 255, 255, 0.1);
+    background-size: 150%;
 }
 button:active {
     background-color: rgba(255, 255, 255, 0.2);
