@@ -13,6 +13,10 @@
         <DesktopMenu class="only-desktop" />
         <div class="actions">
             <slot name="actions" />
+            <DropdownMenu
+                v-if="menu.length > 0"
+                :menu="menu"
+            />
         </div>
     </div>
 </template>
@@ -20,9 +24,10 @@
 <script>
 import ButtonIcon from './ButtonIcon.vue';
 import DesktopMenu from './DesktopMenu.vue';
+import DropdownMenu from './DropdownMenu.vue';
 
 export default {
-    components: { ButtonIcon, DesktopMenu },
+    components: { ButtonIcon, DesktopMenu, DropdownMenu },
     props: {
         title: {
             type: String,
@@ -31,6 +36,10 @@ export default {
         backable: {
             type: Boolean,
             default: false,
+        },
+        menu: {
+            type: Array,
+            default: () => [],
         },
     },
     methods: {
