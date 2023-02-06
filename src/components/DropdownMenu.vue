@@ -1,5 +1,8 @@
 <template>
-    <div v-click-outside="closeMenu">
+    <div
+        v-click-outside="closeMenu"
+        class="dropdown-menu-wrapper"
+    >
         <ButtonIcon
             icon="more_vert"
             :disabled="disabled"
@@ -57,5 +60,10 @@ export default {
     top: 50px;
     right: 10px;
     z-index: 1;
+}
+
+.dropdown-menu-wrapper {
+    display: flex;
+    align-items: center;
 }
 </style>

@@ -14,7 +14,7 @@
         <BaseLayout>
             <template #meta>
                 <button
-                    class="options"
+                    class="toggle-button"
                     :class="showCalendar ? 'opened' : ''"
                     @click="showCalendar = !showCalendar"
                 >
@@ -33,9 +33,6 @@
                 </button>
             </template>
 
-            <template #menu>
-                <DesktopNav v-if="windowWidth >= 576" />
-            </template>
             <template #actions>
                 <ButtonIcon
                     icon="today"
@@ -58,7 +55,6 @@ import { DatePicker } from 'v-calendar';
 import DropdownMenu from './DropdownMenu';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
-import DesktopNav from './DesktopNav.vue';
 import BaseLayout from './BaseLayout.vue';
 
 export default {
@@ -67,7 +63,6 @@ export default {
         DatePicker,
         DropdownMenu,
         ButtonIcon,
-        DesktopNav,
         BaseLayout,
     },
     mixins: [windowWidthMixin],
@@ -94,6 +89,9 @@ export default {
         dateWatcher: null,
         innerDate: new Date(),
     }),
+    mounted() {
+        this.innerDate = this.date;
+    },
 
     methods: {
         dayclickHandler(e) {
@@ -112,7 +110,6 @@ export default {
             }
         },
         updateDate(date) {
-            console.log(date.getDay());
             document.dispatchEvent(
                 new CustomEvent('change-date', {
                     detail: {
@@ -167,10 +164,11 @@ export default {
     transform: rotate(180deg);
 }
 
-.options {
-    color: white;
+.toggle-button {
+    display: flex;
+    flex-direction: row;
+    color: var(--bs-on-primary);
 }
-
 .dateInfo {
     font-weight: bold;
     font-size: 18px;

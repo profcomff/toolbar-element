@@ -9,9 +9,8 @@
             <span class="title">{{ title }}</span>
             <slot name="meta" />
         </div>
-        <menu>
-            <slot name="menu" />
-        </menu>
+        <div class="vl" />
+        <DesktopMenu class="only-desktop" />
         <div class="actions">
             <slot name="actions" />
         </div>
@@ -20,9 +19,10 @@
 
 <script>
 import ButtonIcon from './ButtonIcon.vue';
+import DesktopMenu from './DesktopMenu.vue';
 
 export default {
-    components: { ButtonIcon },
+    components: { ButtonIcon, DesktopMenu },
     props: {
         title: {
             type: String,
@@ -55,27 +55,50 @@ export default {
 
 .meta {
     gap: 16px;
+    width: 320px;
 }
 
 .title {
-    font-size: 24px;
+    font-size: 16px;
+    white-space: nowrap;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.title:empty {
+    display: none;
+}
+
+.vl {
+    width: 2px;
+    height: calc(100% - 4px);
+    align-self: center;
+    margin: 0 16px;
+    border-radius: 2px;
+    background: linear-gradient(
+        0,
+        var(--bs-primary),
+        rgba(255, 255, 255, 0.5) 45%,
+        var(--bs-primary)
+    );
 }
 
 .base-layout {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
+    display: flex;
     background: var(--bs-primary);
     height: 56px;
-    padding: 0 4%;
+    padding: 0 min(4%, 16px);
     margin: 0;
 }
+
 @media screen and (max-width: 575px) {
-    menu {
-        display: none;
-    }
     .base-layout {
         display: flex;
         justify-content: space-between;
+    }
+    .only-desktop,
+    .vl {
+        display: none;
     }
 }
 </style>
