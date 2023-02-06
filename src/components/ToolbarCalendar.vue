@@ -11,7 +11,7 @@
                 is-required
             />
         </div>
-        <BaseLayout>
+        <BaseLayout :menu="options.menu">
             <template #meta>
                 <button
                     class="toggle-button"
@@ -39,10 +39,6 @@
                     :disabled="options.disabled"
                     @click="updateDate(new Date())"
                 />
-                <DropdownMenu
-                    :menu="options.menu"
-                    :disabled="options.disabled"
-                />
             </template>
         </BaseLayout>
     </div>
@@ -52,7 +48,6 @@
 import 'v-calendar/dist/style.css';
 import vClickOutside from 'click-outside-vue3';
 import { DatePicker } from 'v-calendar';
-import DropdownMenu from './DropdownMenu';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
 import BaseLayout from './BaseLayout.vue';
@@ -61,7 +56,6 @@ export default {
     name: 'NavbarTop',
     components: {
         DatePicker,
-        DropdownMenu,
         ButtonIcon,
         BaseLayout,
     },
@@ -72,11 +66,7 @@ export default {
     props: {
         options: {
             type: Object,
-            default: () => ({
-                text: 'Твой физфак!',
-                menu: [],
-                disabled: true,
-            }),
+            required: true,
         },
         date: {
             type: Date,

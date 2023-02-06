@@ -48,10 +48,9 @@ export default {
     },
     methods: {
         changeHeaderHandler(e) {
-            Object.assign(this.options, e.detail);
+            this.options = e.detail;
         },
         changeDateHandler(e) {
-            console.log('change-date', e);
             this.date = e.detail.date;
         },
         syncDateHandler() {
