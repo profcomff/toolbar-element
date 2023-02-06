@@ -33,6 +33,9 @@
                 </button>
             </template>
 
+            <template #menu>
+                <DesktopNav v-if="windowWidth >= 576" />
+            </template>
             <template #actions>
                 <ButtonIcon
                     icon="today"
@@ -55,6 +58,7 @@ import { DatePicker } from 'v-calendar';
 import DropdownMenu from './DropdownMenu';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
+import DesktopNav from './DesktopNav.vue';
 import BaseLayout from './BaseLayout.vue';
 
 export default {
@@ -63,6 +67,7 @@ export default {
         DatePicker,
         DropdownMenu,
         ButtonIcon,
+        DesktopNav,
         BaseLayout,
     },
     mixins: [windowWidthMixin],

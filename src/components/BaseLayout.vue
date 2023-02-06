@@ -86,7 +86,4 @@ export default {
         display: none;
     }
 }
-
-@media screen {
-}
 </style>
