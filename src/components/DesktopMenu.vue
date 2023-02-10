@@ -4,7 +4,7 @@
             v-for="(item, i) in items"
             :key="item.title"
             v-bind="item"
-            :active="active === i"
+            :active="pathname.startsWith(item.path)"
             @click="() => navigate(i)"
         />
     </menu>
@@ -21,27 +21,30 @@ export default {
     data() {
         return {
             items,
-            active: items.reduce(
-                (acc, cur, i) =>
-                    window.location.pathname.startsWith(cur.path) ? i : acc,
-                0,
-            ),
+            pathname: window.location.pathname,
         };
     },
     methods: {
         navigate(i) {
-            this.active = i;
-            document.dispatchEvent(
-                new CustomEvent('change-page', {
-                    detail: {
-                        path: items[i].path,
-                    },
-                }),
-            );
             singleSpa.navigateToUrl(items[i].path);
+        },
+        beforeRoutingEventHandler() {
+            this.pathname = window.location.pathname;
         },
     },
     components: { DesktopMenuItem },
+    mounted() {
+        window.addEventListener(
+            'single-spa:before-routing-event',
+            this.beforeRoutingEventHandler,
+        );
+    },
+    unmounted() {
+        window.removeEventListener(
+            'single-spa:before-routing-event',
+            this.beforeRoutingEventHandler,
+        );
+    },
 };
 </script>
 <style scoped>
