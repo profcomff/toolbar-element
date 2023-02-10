@@ -3,7 +3,7 @@
         class="desktop-menu-item"
         :class="{ active }"
     >
-        {{ title }}
+        <span class="noselect">{{ title }}</span>
     </button>
 </template>
 <script>
