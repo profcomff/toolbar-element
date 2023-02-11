@@ -1,9 +1,9 @@
 <template>
     <button
-        class="desktop-menu-item"
+        class="noselect desktop-menu-item"
         :class="{ active }"
     >
-        <span class="noselect">{{ title }}</span>
+        {{ title }}
     </button>
 </template>
 <script>
