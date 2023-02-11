@@ -1,6 +1,6 @@
 <template>
     <button
-        class="desktop-menu-item"
+        class="noselect desktop-menu-item"
         :class="{ active }"
     >
         {{ title }}
