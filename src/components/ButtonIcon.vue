@@ -1,11 +1,13 @@
 <template>
-    <button class="material-symbols-sharp">
-        {{ icon }}
+    <button>
+        <MaterialIcon :icon="icon" />
     </button>
 </template>
 
 <script>
+import { MaterialIcon } from 'profcomff-ui-common/components';
 export default {
+    components: { MaterialIcon },
     props: {
         icon: {
             type: String,

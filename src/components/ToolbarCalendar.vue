@@ -27,9 +27,10 @@
                             {{ options.groupInfo.number }} группа
                         </span>
                     </div>
-                    <span class="material-symbols-sharp expander">
-                        expand_more
-                    </span>
+                    <MaterialIcon
+                        icon="expand_more"
+                        class="expander"
+                    />
                 </button>
             </template>
 
@@ -51,6 +52,7 @@ import { DatePicker } from 'v-calendar';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
 import BaseLayout from './BaseLayout.vue';
+import { MaterialIcon } from 'profcomff-ui-common/components';
 
 export default {
     name: 'NavbarTop',
@@ -58,6 +60,7 @@ export default {
         DatePicker,
         ButtonIcon,
         BaseLayout,
+        MaterialIcon,
     },
     mixins: [windowWidthMixin],
     directives: {
@@ -140,10 +143,6 @@ export default {
     display: flex;
     flex-flow: column nowrap;
     align-items: flex-start;
-}
-
-.material-symbols-sharp {
-    font-size: 24px;
 }
 
 .expander {
