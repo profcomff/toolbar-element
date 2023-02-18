@@ -1,6 +1,9 @@
 <template>
     <button>
-        <MaterialIcon :icon="icon" />
+        <MaterialIcon
+            :icon="icon"
+            color="var(--bs-on-primary)"
+        />
     </button>
 </template>
 
@@ -19,7 +22,6 @@ export default {
 
 <style scoped>
 button {
-    color: var(--bs-on-primary);
     border-radius: 999px;
     padding: 4px;
 }

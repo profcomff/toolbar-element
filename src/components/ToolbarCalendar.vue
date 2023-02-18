@@ -30,6 +30,7 @@
                     <MaterialIcon
                         icon="expand_more"
                         class="expander"
+                        color="var(--bs-on-primary)"
                     />
                 </button>
             </template>
