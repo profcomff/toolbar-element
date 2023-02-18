@@ -20,18 +20,12 @@ export default {
         date: new Date(),
     }),
     beforeMount() {
-        document.addEventListener(
-            'change-header-layout',
-            this.changeHeaderHandler,
-        );
+        document.addEventListener('change-header-layout', this.changeHeaderHandler);
         document.addEventListener('change-date', this.changeDateHandler);
         document.addEventListener('sync-date', this.syncDateHandler);
     },
     beforeUnmount() {
-        document.removeEventListener(
-            'change-header-layout',
-            this.changeHeaderHandler,
-        );
+        document.removeEventListener('change-header-layout', this.changeHeaderHandler);
         document.removeEventListener('change-date', this.changeDateHandler);
         document.remove('sync-date', this.syncDateHandler);
     },

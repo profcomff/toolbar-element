@@ -34,16 +34,10 @@ export default {
     },
     components: { DesktopMenuItem },
     mounted() {
-        window.addEventListener(
-            'single-spa:before-routing-event',
-            this.beforeRoutingEventHandler,
-        );
+        window.addEventListener('single-spa:before-routing-event', this.beforeRoutingEventHandler);
     },
     unmounted() {
-        window.removeEventListener(
-            'single-spa:before-routing-event',
-            this.beforeRoutingEventHandler,
-        );
+        window.removeEventListener('single-spa:before-routing-event', this.beforeRoutingEventHandler);
     },
 };
 </script>

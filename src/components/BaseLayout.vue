@@ -84,12 +84,7 @@ export default {
     align-self: center;
     margin: 0 16px;
     border-radius: 2px;
-    background: linear-gradient(
-        0,
-        var(--bs-primary),
-        rgba(255, 255, 255, 0.5) 45%,
-        var(--bs-primary)
-    );
+    background: linear-gradient(0, var(--bs-primary), rgba(255, 255, 255, 0.5) 45%, var(--bs-primary));
 }
 
 .base-layout {
