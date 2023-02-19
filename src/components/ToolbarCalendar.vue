@@ -53,7 +53,7 @@ import { DatePicker } from 'v-calendar';
 import ButtonIcon from './ButtonIcon';
 import { windowWidthMixin } from '../mixins';
 import BaseLayout from './BaseLayout.vue';
-import { MaterialIcon } from 'profcomff-ui-common/components';
+import { MaterialIcon } from '@profcomff/ui-common/components';
 
 export default {
     name: 'NavbarTop',

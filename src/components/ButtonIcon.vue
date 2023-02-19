@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import { MaterialIcon } from 'profcomff-ui-common/components';
+import { MaterialIcon } from '@profcomff/ui-common/components';
 export default {
     components: { MaterialIcon },
     props: {
