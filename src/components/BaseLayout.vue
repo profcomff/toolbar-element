@@ -6,7 +6,7 @@
                 icon="arrow_back"
                 @click="back"
             />
-            <span class="title">{{ title }}</span>
+            <span class="noselect title">{{ title }}</span>
             <slot name="meta" />
         </div>
         <div class="vl" />
